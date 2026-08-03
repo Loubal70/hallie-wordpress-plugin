@@ -1,0 +1,413 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Hallie 0.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/Loubal70/hallie/issues\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-08-03T12:42:58+02:00\n"
+"PO-Revision-Date: 2026-08-03T12:42:58+02:00\n"
+"Language: fr_FR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Domain: hallie\n"
+
+#. Plugin Name of the plugin
+#. Author of the plugin
+#: hallie.php
+#: src/Admin/SettingsPage.php:35
+#: src/Admin/SettingsPage.php:36
+#: src/Admin/SettingsPage.php:46
+#: src/Reviews/Provider/HallieProvider.php:62
+msgid "Hallie"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: hallie.php
+msgid "https://hallie.app"
+msgstr ""
+
+#. Description of the plugin
+#: hallie.php
+msgid "Local search optimisation. Syncs verified customer reviews from your Google Business Profile and publishes them with honest structured data attribution. Not affiliated with Google."
+msgstr "Optimisation du référencement local. Synchronise les avis clients de votre fiche Google Business Profile et les publie avec une attribution honnête dans les données structurées. Sans affiliation avec Google."
+
+#: src/Admin/SettingsRestController.php:234
+msgid "Finish configuring the provider before syncing."
+msgstr "Terminez la configuration de la source avant de synchroniser."
+
+#. translators: %s: transport error message.
+#: src/Http/Client.php:73
+#, php-format
+msgid "Could not reach the review provider: %s"
+msgstr "Impossible de joindre la source d’avis : %s"
+
+#. translators: %d: number of seconds to wait.
+#: src/Http/Client.php:86
+#, php-format
+msgid "Provider rate limit reached, retrying in %d seconds."
+msgstr "Limite de requêtes atteinte, nouvelle tentative dans %d secondes."
+
+#. translators: %d: HTTP status code.
+#: src/Http/Client.php:100
+#, php-format
+msgid "The review provider answered with an unexpected status (%d)."
+msgstr "La source d’avis a répondu avec un statut inattendu (%d)."
+
+#: src/Http/Client.php:118
+msgid "The review provider returned a response that could not be read."
+msgstr "La source d’avis a renvoyé une réponse illisible."
+
+#: src/Reviews/PostType/DisplayOptionsMetabox.php:39
+msgid "Review as published"
+msgstr "L’avis tel qu’il a été publié"
+
+#: src/Reviews/PostType/DisplayOptionsMetabox.php:48
+msgid "Display options"
+msgstr "Options d’affichage"
+
+#: src/Reviews/PostType/DisplayOptionsMetabox.php:65
+msgid "Its author edited this review after you last customised it. Check that your display options still make sense."
+msgstr "Son auteur a modifié cet avis depuis votre dernière personnalisation. Vérifiez que vos options d’affichage tiennent toujours."
+
+#: src/Reviews/PostType/DisplayOptionsMetabox.php:74
+#: src/Reviews/PostType/ReviewPostType.php:139
+msgid "Rating"
+msgstr "Note"
+
+#: src/Reviews/PostType/DisplayOptionsMetabox.php:75
+#: src/Reviews/PostType/ReviewPostType.php:136
+msgid "Author"
+msgstr "Auteur"
+
+#: src/Reviews/PostType/DisplayOptionsMetabox.php:76
+#: src/Reviews/PostType/ReviewPostType.php:143
+msgid "Published"
+msgstr "Publié le"
+
+#: src/Reviews/PostType/DisplayOptionsMetabox.php:77
+#: src/Reviews/PostType/ReviewPostType.php:141
+msgid "Source"
+msgstr "Source"
+
+#: src/Reviews/PostType/DisplayOptionsMetabox.php:82
+#: src/Reviews/PostType/ReviewPostType.php:140
+msgid "Review"
+msgstr "Avis"
+
+#: src/Reviews/PostType/DisplayOptionsMetabox.php:91
+msgid "Your reply"
+msgstr "Votre réponse"
+
+#: src/Reviews/PostType/DisplayOptionsMetabox.php:109
+msgid "Show first"
+msgstr "Afficher en premier"
+
+#: src/Reviews/PostType/DisplayOptionsMetabox.php:115
+msgid "Hide from the site"
+msgstr "Masquer sur le site"
+
+#: src/Reviews/PostType/DisplayOptionsMetabox.php:120
+msgid "Set a featured image to replace the author picture — useful when someone reviewed you from an account with no photo."
+msgstr "Définissez une image mise en avant pour remplacer la photo de l’auteur — utile lorsqu’un client vous a noté depuis un compte sans photo."
+
+#: src/Reviews/PostType/ReviewPostType.php:76
+msgctxt "post type general name"
+msgid "Reviews"
+msgstr "Avis"
+
+#: src/Reviews/PostType/ReviewPostType.php:77
+msgctxt "post type singular name"
+msgid "Review"
+msgstr "Avis"
+
+#: src/Reviews/PostType/ReviewPostType.php:78
+msgctxt "admin menu"
+msgid "Reviews"
+msgstr "Avis"
+
+#: src/Reviews/PostType/ReviewPostType.php:79
+msgid "All reviews"
+msgstr "Tous les avis"
+
+#: src/Reviews/PostType/ReviewPostType.php:80
+#: src/Reviews/PostType/ReviewPostType.php:81
+msgid "Add review"
+msgstr "Ajouter un avis"
+
+#: src/Reviews/PostType/ReviewPostType.php:82
+msgid "Edit review"
+msgstr "Modifier l’avis"
+
+#: src/Reviews/PostType/ReviewPostType.php:83
+msgid "Search reviews"
+msgstr "Rechercher des avis"
+
+#: src/Reviews/PostType/ReviewPostType.php:84
+msgid "No reviews yet."
+msgstr "Aucun avis pour le moment."
+
+#: src/Reviews/PostType/ReviewPostType.php:85
+msgid "No reviews in the bin."
+msgstr "Aucun avis dans la corbeille."
+
+#: src/Reviews/PostType/ReviewPostType.php:142
+msgid "State"
+msgstr "État"
+
+#: src/Reviews/PostType/ReviewPostType.php:293
+msgid "Edited by its author"
+msgstr "Modifié par son auteur"
+
+#: src/Reviews/PostType/ReviewPostType.php:297
+msgid "Hidden"
+msgstr "Masqué"
+
+#: src/Reviews/PostType/ReviewPostType.php:301
+msgid "Custom photo"
+msgstr "Photo personnalisée"
+
+#: src/Reviews/Provider/HallieProvider.php:198
+msgid "API token"
+msgstr "Jeton d’API"
+
+#: src/Reviews/Provider/HallieProvider.php:201
+msgid "Created by the account owner in your Hallie organisation settings."
+msgstr "Créé par le propriétaire du compte dans les réglages de votre organisation Hallie."
+
+#: src/Reviews/Provider/HallieProvider.php:209
+msgid "Business profile"
+msgstr "Fiche d’établissement"
+
+#: src/Reviews/Repository.php:273
+#: src/Reviews/Sync/Synchronizer.php:477
+msgid "Anonymous"
+msgstr "Anonyme"
+
+#. translators: %s: review author name.
+#: src/Reviews/Sync/AvatarImporter.php:207
+#, php-format
+msgid "Profile picture for %s"
+msgstr "Photo de profil de %s"
+
+#: src/Reviews/Sync/Scheduler.php:128
+msgid "Every six hours (Hallie)"
+msgstr "Toutes les six heures (Hallie)"
+
+#: src/Reviews/Sync/Scheduler.php:133
+msgid "Once a day (Hallie)"
+msgstr "Une fois par jour (Hallie)"
+
+#: src/Reviews/Sync/Scheduler.php:186
+msgid "Sync finished with errors."
+msgstr "La synchronisation s’est terminée avec des erreurs."
+
+#: src/Reviews/Sync/SyncResult.php:55
+msgid "Nothing changed upstream."
+msgstr "Rien n’a changé à la source."
+
+#: assets/src/settings/SettingsApp.js:22
+#: build/settings.js:1
+msgid "Every six hours"
+msgstr "Toutes les six heures"
+
+#: assets/src/settings/SettingsApp.js:23
+#: build/settings.js:1
+msgid "Once a day"
+msgstr "Une fois par jour"
+
+#: assets/src/settings/SettingsApp.js:27
+#: build/settings.js:1
+msgid "Detect automatically"
+msgstr "Détection automatique"
+
+#: assets/src/settings/SettingsApp.js:28
+#: build/settings.js:1
+msgid "Yoast SEO"
+msgstr ""
+
+#: assets/src/settings/SettingsApp.js:29
+#: build/settings.js:1
+msgid "The SEO Framework"
+msgstr ""
+
+#: assets/src/settings/SettingsApp.js:30
+#: build/settings.js:1
+msgid "Standalone"
+msgstr "Autonome"
+
+#: assets/src/settings/SettingsApp.js:89
+#: build/settings.js:3
+msgid "Something went wrong."
+msgstr "Une erreur est survenue."
+
+#: assets/src/settings/SettingsApp.js:106
+#: build/settings.js:3
+msgid "Settings saved."
+msgstr "Réglages enregistrés."
+
+#: assets/src/settings/SettingsApp.js:166
+#: build/settings.js:3
+msgid "The stored API token can no longer be decrypted — this happens when the site security salts are rotated. Enter it again to resume syncing."
+msgstr "Le jeton d’API enregistré ne peut plus être déchiffré — cela se produit lorsque les clés de sécurité du site sont renouvelées. Saisissez-le à nouveau pour relancer la synchronisation."
+
+#: assets/src/settings/SettingsApp.js:178
+#: build/settings.js:3
+msgid "Review source"
+msgstr "Source des avis"
+
+#: assets/src/settings/SettingsApp.js:236
+#: build/settings.js:3
+msgid "Check for new reviews"
+msgstr "Rechercher de nouveaux avis"
+
+#: assets/src/settings/SettingsApp.js:260
+#: build/settings.js:3
+msgid "Structured data"
+msgstr "Données structurées"
+
+#: assets/src/settings/SettingsApp.js:261
+#: build/settings.js:3
+msgid "Reviews are attached to the business entity your SEO plugin already declares. Leave on automatic unless detection gets it wrong."
+msgstr "Les avis sont rattachés à l’entité que votre extension SEO déclare déjà. Laissez sur automatique, sauf si la détection se trompe."
+
+#: assets/src/settings/SettingsApp.js:275
+#: build/settings.js:3
+msgid "Delete reviews when the plugin is uninstalled"
+msgstr "Supprimer les avis à la désinstallation"
+
+#: assets/src/settings/SettingsApp.js:279
+#: build/settings.js:3
+msgid "Off by default. Settings are always removed; your reviews and their customisations are not, unless you ask for it here."
+msgstr "Désactivé par défaut. Les réglages sont toujours supprimés ; vos avis et leurs personnalisations ne le sont que si vous le demandez ici."
+
+#: assets/src/settings/SettingsApp.js:300
+#: build/settings.js:3
+msgid "Save settings"
+msgstr "Enregistrer les réglages"
+
+#: assets/src/settings/SettingsApp.js:314
+#: build/settings.js:3
+msgid "Sync now"
+msgstr "Synchroniser maintenant"
+
+#: assets/src/settings/SettingsApp.js:320
+#: build/settings.js:3
+msgid "Last sync:"
+msgstr "Dernière synchronisation :"
+
+#: src/Reviews/Provider/HallieProvider.php:204
+msgid "Create a token"
+msgstr "Créer un jeton"
+
+#: assets/src/settings/SettingsApp.js:194
+#: build/settings.js:3
+msgid "Read the API documentation"
+msgstr "Consulter la documentation de l’API"
+
+#: src/Reviews/PostType/ReviewPostType.php:235
+msgid "The text of a review cannot be changed: it records what its author published elsewhere."
+msgstr "Le texte d’un avis ne peut pas être modifié : il consigne ce que son auteur a publié ailleurs."
+
+#: src/Reviews/Provider/HallieProvider.php:211
+msgid "Choose among the profiles your token grants access to."
+msgstr "Choisissez parmi les fiches auxquelles votre jeton donne accès."
+
+#: assets/src/settings/RemoteSelect.js:44
+#: build/settings.js:1
+msgid "Enter your API token and save to pick a business profile."
+msgstr "Saisissez votre jeton d’API et enregistrez pour choisir une fiche d’établissement."
+
+#: assets/src/settings/RemoteSelect.js:70
+#: build/settings.js:1
+msgid "— Select —"
+msgstr "— Sélectionner —"
+
+#. translators: %s: human readable time difference, e.g. "3 months".
+#: src/Reviews/Data/DisplayableReview.php:76
+#, php-format
+msgid "%s ago"
+msgstr "il y a %s"
+
+#. translators: %d: number of reviews imported so far.
+#: src/Reviews/Sync/SyncResult.php:61
+#, php-format
+msgid "%d imported so far, still working…"
+msgstr "%d importés pour l’instant, traitement en cours…"
+
+#: assets/src/settings/SettingsApp.js:43
+#: build/settings.js:1
+msgid "the source"
+msgstr "la source"
+
+#: assets/src/settings/SettingsApp.js:46
+#: build/settings.js:1
+msgid "Author initials"
+msgstr "Initiales de l’auteur"
+
+#: assets/src/settings/SettingsApp.js:49
+#: build/settings.js:1
+msgid "Download to the media library"
+msgstr "Télécharger dans la médiathèque"
+
+#. translators: %s: platform the reviews come from, e.g. Google.
+#: assets/src/settings/SettingsApp.js:54
+#: build/settings.js:3
+#, js-format
+msgid "Serve from %s"
+msgstr "Servir depuis %s"
+
+#: assets/src/settings/SettingsApp.js:220
+#: build/settings.js:3
+msgid "Reviews to keep"
+msgstr "Avis à conserver"
+
+#: assets/src/settings/SettingsApp.js:247
+#: build/settings.js:3
+msgid "Author pictures"
+msgstr "Photos des auteurs"
+
+#: assets/src/settings/SettingsApp.js:251
+#: build/settings.js:3
+msgid "Downloading keeps the pictures available and asks nothing of your visitors, at the cost of storage. Serving them stores nothing, but every visitor then requests them from the platform. Initials request nothing and store nothing. Leaving the download option deletes the pictures already stored."
+msgstr "Le téléchargement garde les photos disponibles et n’exige rien de vos visiteurs, au prix d’un stockage. Les servir ne stocke rien, mais chaque visiteur les demande alors à la plateforme. Les initiales ne demandent ni ne stockent rien. Quitter l’option de téléchargement supprime les photos déjà stockées."
+
+#: assets/src/settings/SettingsApp.js:227
+#: build/settings.js:3
+msgid "The most recent reviews are kept; 0 keeps them all. There is no point storing thousands to display a handful. The rating shown always comes from your listing, never from how many are stored."
+msgstr "Les avis les plus récents sont conservés ; 0 les garde tous. Inutile d’en stocker des milliers pour en afficher une poignée. La note affichée vient toujours de votre fiche, jamais du nombre d’avis conservés."
+
+#. translators: 1: created count, 2: updated count, 3: unchanged count.
+#: src/Reviews/Sync/SyncResult.php:68
+#, php-format
+msgid "%1$d added, %2$d updated, %3$d unchanged."
+msgstr "%1$d ajouté, %2$d mis à jour, %3$d inchangé."
+
+#. translators: %d: number of reviews deleted.
+#: src/Reviews/Sync/SyncResult.php:80
+#, php-format
+msgid "%d deleted, no longer among the reviews kept."
+msgstr "%d supprimé, ne faisant plus partie des avis conservés."
+
+#: src/Reviews/PostType/ReviewRestController.php:62
+msgid "Sorry, you are not allowed to browse reviews."
+msgstr "Désolé, vous n’avez pas l’autorisation de parcourir les avis."
+
+#: src/Admin/SettingsRestController.php:69
+msgid "Key of the field whose choices are wanted."
+msgstr "Clé du champ dont on veut les choix."
+
+#: src/Admin/SettingsRestController.php:190
+msgid "This provider declares no field by that name."
+msgstr "Cette source ne déclare aucun champ portant ce nom."
+
+#: src/Admin/SettingsRestController.php:198
+msgid "This field does not take its choices from the source."
+msgstr "Ce champ ne tire pas ses choix de la source."
+
+#: assets/src/settings/SettingsApp.js:313
+#: build/settings.js:3
+msgid "Syncing…"
+msgstr "Synchronisation…"

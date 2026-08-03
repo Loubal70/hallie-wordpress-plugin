@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<ruleset name="Hallie">
+	<description>Coding standards for the Hallie plugin.</description>
+
+	<!-- What to scan -->
+	<file>.</file>
+	<exclude-pattern>/vendor/</exclude-pattern>
+	<exclude-pattern>/node_modules/</exclude-pattern>
+	<exclude-pattern>/tests/</exclude-pattern>
+	<exclude-pattern>/build/</exclude-pattern><!-- Generated assets (settings.asset.php). -->
+
+	<!-- How to scan -->
+	<arg value="sp"/><!-- Show sniff codes and progress -->
+	<arg name="basepath" value="./"/>
+	<arg name="colors"/>
+	<arg name="extensions" value="php"/>
+	<arg name="parallel" value="8"/>
+
+	<!-- The plugin declares Requires PHP: 8.4. -->
+	<config name="testVersion" value="8.4-"/>
+	<rule ref="PHPCompatibilityWP">
+		<!-- The sniff does not recognise enums as an object context, and flags the
+		     perfectly valid $this inside their methods. -->
+		<exclude name="PHPCompatibility.Variables.ForbiddenThisUseContexts.OutsideObjectContext"/>
+	</rule>
+
+	<!-- WordPress Coding Standards -->
+	<config name="minimum_supported_wp_version" value="7.0"/>
+	<rule ref="WordPress">
+		<!-- File headers kept (WP standard); method/property docblocks optional with strict typing. -->
+		<exclude name="Squiz.Commenting.FunctionComment.Missing"/>
+		<exclude name="Squiz.Commenting.VariableComment.Missing"/>
+		<!-- Native types make @param/@return redundant: allow description-only PHPDoc. -->
+		<exclude name="Squiz.Commenting.FunctionComment.MissingParamTag"/>
+		<exclude name="Squiz.Commenting.FunctionComment.MissingParamComment"/>
+		<!-- Several docblocks exist only to carry an array shape for static analysis;
+		     forcing a prose summary on top of it would be noise, not documentation. -->
+		<exclude name="Generic.Commenting.DocComment.MissingShort"/>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="hallie"/>
+				<element value="Hallie"/>
+				<element value="HALLIE_"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="hallie"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.WhiteSpace.ControlStructureSpacing">
+		<properties>
+			<property name="blank_line_check" value="true"/>
+		</properties>
+	</rule>
+
+	<!-- PSR-4 autoloaded classes use class-name files, not WordPress hyphenated names. -->
+	<rule ref="WordPress.Files.FileName">
+		<exclude-pattern>/src/</exclude-pattern>
+	</rule>
+</ruleset>

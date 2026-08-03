@@ -1,0 +1,46 @@
+{
+    "name": "loubal70/hallie",
+    "description": "Local search optimisation: sync customer reviews from your Google Business Profile and publish them with honest structured data attribution.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://hallie.app",
+    "authors": [
+        {
+            "name": "Hallie",
+            "homepage": "https://hallie.app"
+        }
+    ],
+    "require": {
+        "php": ">=8.4"
+    },
+    "require-dev": {
+        "wp-coding-standards/wpcs": "^3.1",
+        "phpcompatibility/phpcompatibility-wp": "^2.1",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+        "phpunit/phpunit": "^9.6",
+        "yoast/phpunit-polyfills": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Hallie\\": "src/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "scripts": {
+        "phpcs": "phpcs",
+        "phpcbf": "phpcbf",
+        "test": "phpunit",
+        "plugin-check": "wp plugin check hallie --categories=plugin_repo,security --exclude-directories=tests,bin,.github --exclude-files=.distignore,.editorconfig,.gitignore,.phpcs.xml.dist,phpunit.xml.dist,composer.json,composer.lock,CLAUDE.md,README.md",
+        "makepot": "wp i18n make-pot . languages/hallie.pot --domain=hallie",
+        "i18n": [
+            "@makepot",
+            "for po in languages/*.po; do wp i18n update-po languages/hallie.pot \"$po\"; done",
+            "for po in languages/*.po; do wp i18n make-mo \"$po\" languages/; done",
+            "wp i18n make-json languages/ --no-purge"
+        ]
+    }
+}

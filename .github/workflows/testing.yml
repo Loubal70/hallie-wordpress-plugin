@@ -1,0 +1,179 @@
+name: Testing
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  phpcs:
+    name: Coding standards
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v5
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+          tools: composer
+
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v4
+
+      - name: Run PHP_CodeSniffer
+        run: composer phpcs
+
+  phpunit:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    services:
+      database:
+        image: mysql:8.0
+        env:
+          MYSQL_DATABASE: wordpress_tests
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v5
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+          tools: composer
+
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v4
+
+      - name: Install Subversion
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq subversion
+
+      - name: Set up the WordPress test suite
+        run: bash bin/install-wp-tests.sh wordpress_tests root root 127.0.0.1 latest true
+
+      - name: Run tests
+        run: composer test
+
+  plugin-check:
+    name: Plugin Check
+    runs-on: ubuntu-latest
+    services:
+      database:
+        image: mysql:8.0
+        env:
+          MYSQL_DATABASE: wordpress
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v5
+        with:
+          path: hallie
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+          tools: wp-cli
+
+      # Run through wp-cli rather than the wp-env based action, which is unreliable on
+      # the runners. Mirrors the local `composer plugin-check` exactly.
+      - name: Set up WordPress
+        run: |
+          wp core download --path=wp
+          wp config create --path=wp --dbname=wordpress --dbuser=root --dbpass=root --dbhost=127.0.0.1
+          wp core install --path=wp --url=http://localhost --title="Test" \
+            --admin_user=admin --admin_password=admin --admin_email=admin@example.com --skip-email
+          wp plugin install plugin-check --activate --path=wp
+          cp -r hallie wp/wp-content/plugins/hallie
+
+      - name: Run Plugin Check
+        run: |
+          wp plugin check hallie --path=wp \
+            --categories=plugin_repo,security \
+            --exclude-directories=tests,bin,.github,.claude \
+            --exclude-files=.distignore,.editorconfig,.gitignore,.phpcs.xml.dist,phpunit.xml.dist,composer.json,composer.lock,CLAUDE.md,README.md
+
+  i18n:
+    name: Translations up to date
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v5
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+          tools: wp-cli
+
+      # A stale POT hides new strings from translators; a stale MO or JSON keeps serving the
+      # previous translation even once the PO is right. Only the PO is written by hand, so
+      # everything else is rebuilt here and compared.
+      - name: Rebuild every translation artefact
+        run: |
+          wp i18n make-pot . languages/hallie.pot --domain=hallie
+          for po in languages/*.po; do wp i18n update-po languages/hallie.pot "$po"; done
+          for po in languages/*.po; do wp i18n make-mo "$po" languages/; done
+          wp i18n make-json languages/ --no-purge
+
+      # POT-Creation-Date is restamped on every run, so it is the one line a diff must ignore.
+      - name: Ensure the committed translations match the source
+        run: |
+          if ! git diff --exit-code -I'^"POT-Creation-Date:' -- languages/; then
+            echo "::error::languages/ is out of date — run 'composer i18n' and commit the result."
+            exit 1
+          fi
+
+  assets:
+    name: JS assets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Lint JavaScript
+        run: yarn lint:js
+
+      - name: Build assets
+        run: yarn build
+
+      # build/ ships to WordPress.org, so a stale bundle means users run old code.
+      - name: Ensure the committed build is up to date
+        run: |
+          if [ -n "$(git status --porcelain build/)" ]; then
+            echo "::error::build/ is out of date — run 'yarn build' and commit the result."
+            git status --porcelain build/
+            exit 1
+          fi

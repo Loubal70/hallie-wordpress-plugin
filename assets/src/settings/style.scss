@@ -1,0 +1,10 @@
+.hallie-actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+.hallie-actions__status {
+	color: var(--wp--preset--color--contrast-2, #757575);
+}

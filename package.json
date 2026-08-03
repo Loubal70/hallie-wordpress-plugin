@@ -1,0 +1,26 @@
+{
+	"name": "hallie",
+	"version": "0.1.0",
+	"description": "Build tooling for the Hallie admin app.",
+	"private": true,
+	"license": "GPL-2.0-or-later",
+	"scripts": {
+		"build": "wp-scripts build",
+		"start": "wp-scripts start",
+		"lint:js": "wp-scripts lint-js",
+		"format": "wp-scripts format assets/src"
+	},
+	"devDependencies": {
+		"@wordpress/api-fetch": "latest",
+		"@wordpress/components": "latest",
+		"@wordpress/core-data": "latest",
+		"@wordpress/data": "latest",
+		"@wordpress/date": "latest",
+		"@wordpress/dom-ready": "latest",
+		"@wordpress/editor": "latest",
+		"@wordpress/element": "latest",
+		"@wordpress/i18n": "^6.21.0",
+		"@wordpress/plugins": "latest",
+		"@wordpress/scripts": "latest"
+	}
+}
