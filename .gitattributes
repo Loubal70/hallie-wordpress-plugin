@@ -1,0 +1,28 @@
+# What a Composer install must not carry.
+#
+# Composer takes the archive GitHub builds with `git archive`, which reads this file and
+# nothing else — .distignore is a wp-cli convention, used when publishing to WordPress.org,
+# and Composer knows nothing about it. The two lists must stay in step: a site installing
+# this plugin through Composer should receive what an install from WordPress.org receives.
+
+/.distignore        export-ignore
+/.editorconfig      export-ignore
+/.gitattributes     export-ignore
+/.gitignore         export-ignore
+/.github            export-ignore
+/.phpcs.xml.dist    export-ignore
+/assets/src         export-ignore
+/bin                export-ignore
+/composer.lock      export-ignore
+/package.json       export-ignore
+/phpunit.xml.dist   export-ignore
+/tests              export-ignore
+/webpack.config.js  export-ignore
+/yarn.lock          export-ignore
+
+/CODE_OF_CONDUCT.md export-ignore
+/CONTRIBUTING.md    export-ignore
+/README.md          export-ignore
+/SECURITY.md        export-ignore
+
+# composer.json stays: Composer needs the package it is installing to declare itself.
