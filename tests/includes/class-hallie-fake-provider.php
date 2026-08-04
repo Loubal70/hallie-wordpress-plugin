@@ -64,15 +64,18 @@ final class Hallie_Fake_Provider implements ReviewProvider {
 		);
 	}
 
+	/**
+	 * Hand back the next scripted answer.
+	 *
+	 * Read with array_key_exists, not `??`: a stored null means "the source is unchanged",
+	 * and `??` cannot tell it from an absent key. A bare array becomes one page with nothing
+	 * after it; will_return_page() scripts anything more.
+	 */
 	public function fetch_reviews( string $profile_id, int $page = 1, int $per_page = 100 ): ?ReviewPage {
-		// array_key_exists, not ??: a scripted null means "unchanged", and ?? would read it
-		// as no answer at all and hand back an empty page instead.
 		$answer = array_key_exists( $this->call, $this->answers ) ? $this->answers[ $this->call ] : array();
 
 		++$this->call;
 
-		// Null keeps meaning "unchanged". A bare array is the common case — one page with
-		// nothing after it — while will_return_page() scripts the rest.
 		if ( null === $answer ) {
 			return null;
 		}

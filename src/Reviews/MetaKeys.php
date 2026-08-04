@@ -89,10 +89,8 @@ final class MetaKeys {
 	/**
 	 * Source keys a review always has, whatever it looks like.
 	 *
-	 * Everything else may legitimately be empty — an anonymous author, an account with no
-	 * picture, a review nobody replied to, a site with no profile chosen yet. Reading those
-	 * as "missing" would rewrite such reviews on every sync and report edits that never
-	 * happened.
+	 * The rest may legitimately be empty — no picture, no reply, no profile chosen yet. Read
+	 * as missing, they rewrite the review on every sync and report edits that never happened.
 	 *
 	 * @return string[]
 	 */
