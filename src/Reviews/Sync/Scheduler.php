@@ -68,11 +68,10 @@ final class Scheduler {
 	}
 
 	/**
-	 * One pass of the picture work, whichever way the setting points.
+	 * The cron side: one pass, then another event while anything remains.
 	 *
-	 * Hosting on, the queue is fetched. Hosting off, it is discarded and what was already
-	 * stored goes with it. Both are batched, and the pass asks for another until nothing is
-	 * left — one event per batch, so each gets a fresh time limit and no request runs long.
+	 * An event per batch rather than a loop, so each pass starts on a fresh time limit and
+	 * no single request runs long.
 	 */
 	public static function drain_avatars(): void {
 		if ( ! self::settle_pictures() ) {
@@ -83,9 +82,8 @@ final class Scheduler {
 	/**
 	 * One pass of the picture work, whichever way the setting points.
 	 *
-	 * Hosting on, the queue is fetched. Hosting off, it is discarded and whatever was
-	 * already stored goes with it. Both drivers — cron and the command line — call this, so
-	 * a sync run either way settles the same amount of work.
+	 * Fetching when pictures are hosted, discarding when they are not. Cron and the command
+	 * line both call this — putting the work in only one of them is how they last diverged.
 	 *
 	 * @return bool Whether nothing is left to do.
 	 */
