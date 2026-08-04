@@ -30,6 +30,11 @@ composer i18n           # must leave nothing uncommitted
 `composer i18n` last of all, and again after a version bump: the POT header carries the
 plugin version, so raising it without regenerating leaves the file stale.
 
+A version lives in four places, and nothing checks they agree: the `Version:` header and
+the `HALLIE_VERSION` constant in `hallie.php`, `Stable tag:` in `readme.txt`, and the
+changelog entry. The constant is what the plugin reports to the API and uses to cache-bust
+its assets, so letting it drift is silent rather than loud.
+
 `yarn build` too, if you touched anything under `assets/src/`. The compiled bundle in
 `build/` is committed on purpose — WordPress.org runs no build step — and the CI rejects a
 bundle that does not match its sources.
