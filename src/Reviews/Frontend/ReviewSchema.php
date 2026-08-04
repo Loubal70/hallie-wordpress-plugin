@@ -20,10 +20,8 @@ defined( 'ABSPATH' ) || exit;
 final readonly class ReviewSchema {
 
 	/**
-	 * Reviews say nothing about whether a company is a local business, and this plugin is
-	 * in no position to decide: without an explicit answer from the site, the safe type is
-	 * the one that carries no obligation. `LocalBusiness` requires an address the site may
-	 * never have declared.
+	 * Reviews say nothing about whether a company is a local business, so the fallback is the
+	 * type carrying no obligation: `LocalBusiness` requires an address the site may not have.
 	 */
 	public const string DEFAULT_BUSINESS_TYPE = 'Organization';
 

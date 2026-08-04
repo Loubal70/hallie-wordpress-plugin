@@ -25,15 +25,13 @@ abstract class LinkedEmitter extends BufferedEmitter {
 	/**
 	 * Business types a host graph may declare, searched in this order.
 	 *
-	 * `LocalBusiness` is a subtype of `Organization`, and a page about a branch declares both:
-	 * the company owning the site, and the establishment the page is about. Reviews belong to
-	 * the establishment, so the more specific type is looked for first.
+	 * A branch page declares both the owning company and the establishment. The reviews are
+	 * the establishment's, so the `LocalBusiness` subtype is looked for before `Organization`.
 	 */
 	private const array BUSINESS_TYPES = array( 'LocalBusiness', 'Organization' );
 
-	private ?string $business_id = null;
-
-	private ?string $host_business_type = null;
+	/** @var array{id: string, type: string}|null */
+	private ?array $host_business = null;
 
 	public function register(): void {
 		$this->observe_host_graph();
@@ -54,29 +52,21 @@ abstract class LinkedEmitter extends BufferedEmitter {
 	 * @return array<int, array<string, mixed>> The very same graph.
 	 */
 	public function capture( array $graph ): array {
-		if ( null === $this->business_id ) {
-			$business = $this->business_in( $graph );
-
-			$this->business_id        = $business['id'] ?? null;
-			$this->host_business_type = $business['type'] ?? null;
-		}
+		$this->host_business ??= $this->business_in( $graph );
 
 		return $graph;
 	}
 
-	/**
-	 * Without an anchor the reviews would float free of any subject, which says less than
-	 * nothing. Better to publish none than an orphan.
-	 */
+	/** Reviews with no subject to point at say less than nothing; better to publish none. */
 	protected function has_something_to_publish(): bool {
-		return parent::has_something_to_publish() && null !== $this->business_id;
+		return parent::has_something_to_publish() && null !== $this->host_business;
 	}
 
 	/**
 	 * @return array<string, mixed>
 	 */
 	protected function build( ReviewSchema $schema ): array {
-		$subject = array( '@id' => $this->business_id );
+		$subject = array( '@id' => $this->host_business['id'] );
 
 		$graph = array_map(
 			static function ( array $review ) use ( $subject ): array {
@@ -90,7 +80,7 @@ abstract class LinkedEmitter extends BufferedEmitter {
 		if ( $schema->has_aggregate() ) {
 			$graph[] = array(
 				'@type'           => $this->business_type_for( $schema ),
-				'@id'             => $this->business_id,
+				'@id'             => $this->host_business['id'],
 				'aggregateRating' => $schema->aggregate,
 			);
 		}
@@ -102,14 +92,12 @@ abstract class LinkedEmitter extends BufferedEmitter {
 	}
 
 	/**
-	 * The type to publish the aggregate under.
-	 *
-	 * What the site states wins; otherwise the host graph already answered the question and
-	 * repeating its answer keeps one entity with one type. Neither is a reason to invent one.
+	 * The type to publish the aggregate under: what the site states, else what the host
+	 * already declared — repeating its answer keeps one entity carrying one type.
 	 */
 	private function business_type_for( ReviewSchema $schema ): string {
 		return $schema->business_type
-			?? $this->host_business_type
+			?? $this->host_business['type']
 			?? ReviewSchema::DEFAULT_BUSINESS_TYPE;
 	}
 
@@ -138,8 +126,7 @@ abstract class LinkedEmitter extends BufferedEmitter {
 	/**
 	 * The `@id` of the first node carrying a given type.
 	 *
-	 * A node declaring the type without an `@id` cannot be linked to, so the search goes on
-	 * rather than giving up on that type.
+	 * A node declaring the type without an `@id` cannot be anchored to, so the search goes on.
 	 *
 	 * @param array<int, array<string, mixed>> $graph Nodes as built by the host plugin.
 	 * @param string                           $type  Schema type to look for.

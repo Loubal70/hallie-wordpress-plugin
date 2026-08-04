@@ -34,11 +34,10 @@ final class ReviewPostType {
 	public const string SLUG = 'hallie_review';
 
 	/**
-	 * Every status a stored review may hold, for queries that must see all of them.
+	 * Every status a stored review may hold.
 	 *
-	 * `'any'` cannot be used: it drops the statuses flagged `exclude_from_search`, the bin
-	 * among them. A binned review would then be invisible to reconciliation and to picture
-	 * cleanup — kept forever, with an orphaned attachment behind it.
+	 * Not `'any'`, which drops the statuses flagged `exclude_from_search` — the bin among
+	 * them, leaving a binned review invisible to reconciliation and to picture cleanup.
 	 *
 	 * @return string[]
 	 */

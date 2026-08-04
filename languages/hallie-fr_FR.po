@@ -73,27 +73,27 @@ msgid "Its author edited this review after you last customised it. Check that yo
 msgstr "Son auteur a modifié cet avis depuis votre dernière personnalisation. Vérifiez que vos options d’affichage tiennent toujours."
 
 #: src/Reviews/PostType/DisplayOptionsMetabox.php:74
-#: src/Reviews/PostType/ReviewPostType.php:152
+#: src/Reviews/PostType/ReviewPostType.php:151
 msgid "Rating"
 msgstr "Note"
 
 #: src/Reviews/PostType/DisplayOptionsMetabox.php:75
-#: src/Reviews/PostType/ReviewPostType.php:149
+#: src/Reviews/PostType/ReviewPostType.php:148
 msgid "Author"
 msgstr "Auteur"
 
 #: src/Reviews/PostType/DisplayOptionsMetabox.php:76
-#: src/Reviews/PostType/ReviewPostType.php:156
+#: src/Reviews/PostType/ReviewPostType.php:155
 msgid "Published"
 msgstr "Publié le"
 
 #: src/Reviews/PostType/DisplayOptionsMetabox.php:77
-#: src/Reviews/PostType/ReviewPostType.php:154
+#: src/Reviews/PostType/ReviewPostType.php:153
 msgid "Source"
 msgstr "Source"
 
 #: src/Reviews/PostType/DisplayOptionsMetabox.php:82
-#: src/Reviews/PostType/ReviewPostType.php:153
+#: src/Reviews/PostType/ReviewPostType.php:152
 msgid "Review"
 msgstr "Avis"
 
@@ -113,59 +113,59 @@ msgstr "Masquer sur le site"
 msgid "Set a featured image to replace the author picture — useful when someone reviewed you from an account with no photo."
 msgstr "Définissez une image mise en avant pour remplacer la photo de l’auteur — utile lorsqu’un client vous a noté depuis un compte sans photo."
 
-#: src/Reviews/PostType/ReviewPostType.php:89
+#: src/Reviews/PostType/ReviewPostType.php:88
 msgctxt "post type general name"
 msgid "Reviews"
 msgstr "Avis"
 
-#: src/Reviews/PostType/ReviewPostType.php:90
+#: src/Reviews/PostType/ReviewPostType.php:89
 msgctxt "post type singular name"
 msgid "Review"
 msgstr "Avis"
 
-#: src/Reviews/PostType/ReviewPostType.php:91
+#: src/Reviews/PostType/ReviewPostType.php:90
 msgctxt "admin menu"
 msgid "Reviews"
 msgstr "Avis"
 
-#: src/Reviews/PostType/ReviewPostType.php:92
+#: src/Reviews/PostType/ReviewPostType.php:91
 msgid "All reviews"
 msgstr "Tous les avis"
 
+#: src/Reviews/PostType/ReviewPostType.php:92
 #: src/Reviews/PostType/ReviewPostType.php:93
-#: src/Reviews/PostType/ReviewPostType.php:94
 msgid "Add review"
 msgstr "Ajouter un avis"
 
-#: src/Reviews/PostType/ReviewPostType.php:95
+#: src/Reviews/PostType/ReviewPostType.php:94
 msgid "Edit review"
 msgstr "Modifier l’avis"
 
-#: src/Reviews/PostType/ReviewPostType.php:96
+#: src/Reviews/PostType/ReviewPostType.php:95
 msgid "Search reviews"
 msgstr "Rechercher des avis"
 
-#: src/Reviews/PostType/ReviewPostType.php:97
+#: src/Reviews/PostType/ReviewPostType.php:96
 msgid "No reviews yet."
 msgstr "Aucun avis pour le moment."
 
-#: src/Reviews/PostType/ReviewPostType.php:98
+#: src/Reviews/PostType/ReviewPostType.php:97
 msgid "No reviews in the bin."
 msgstr "Aucun avis dans la corbeille."
 
-#: src/Reviews/PostType/ReviewPostType.php:155
+#: src/Reviews/PostType/ReviewPostType.php:154
 msgid "State"
 msgstr "État"
 
-#: src/Reviews/PostType/ReviewPostType.php:306
+#: src/Reviews/PostType/ReviewPostType.php:305
 msgid "Edited by its author"
 msgstr "Modifié par son auteur"
 
-#: src/Reviews/PostType/ReviewPostType.php:310
+#: src/Reviews/PostType/ReviewPostType.php:309
 msgid "Hidden"
 msgstr "Masqué"
 
-#: src/Reviews/PostType/ReviewPostType.php:314
+#: src/Reviews/PostType/ReviewPostType.php:313
 msgid "Custom photo"
 msgstr "Photo personnalisée"
 
@@ -307,7 +307,7 @@ msgstr "Créer un jeton"
 msgid "Read the API documentation"
 msgstr "Consulter la documentation de l’API"
 
-#: src/Reviews/PostType/ReviewPostType.php:248
+#: src/Reviews/PostType/ReviewPostType.php:247
 msgid "The text of a review cannot be changed: it records what its author published elsewhere."
 msgstr "Le texte d’un avis ne peut pas être modifié : il consigne ce que son auteur a publié ailleurs."
 
