@@ -101,8 +101,4 @@ final class SyncState {
 	public static function clear(): void {
 		delete_option( self::OPTION );
 	}
-
-	public static function is_running(): bool {
-		return null !== self::resume();
-	}
 }

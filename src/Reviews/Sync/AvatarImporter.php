@@ -34,16 +34,13 @@ final class AvatarImporter {
 	/**
 	 * One batch of reviews carrying a given marker.
 	 *
-	 * Statuses are enumerated rather than asked for as 'any', which drops the ones flagged
-	 * exclude_from_search: a binned review would keep its picture with nothing pointing at it.
-	 *
 	 * @return int[]
 	 */
 	private function reviews_marked_with( string $meta_key, int $batch_size ): array {
 		$ids = get_posts(
 			array(
 				'post_type'              => ReviewPostType::SLUG,
-				'post_status'            => array_keys( get_post_stati() ),
+				'post_status'            => ReviewPostType::every_status(),
 				'posts_per_page'         => $batch_size,
 				'fields'                 => 'ids',
 				'no_found_rows'          => true,

@@ -22,10 +22,16 @@ defined( 'ABSPATH' ) || exit;
  */
 abstract class LinkedEmitter extends BufferedEmitter {
 
-	/** LocalBusiness is a subtype of Organization; hosts emit one or the other. */
+	/**
+	 * Business types a host graph may declare, searched in this order.
+	 *
+	 * A branch page declares both the owning company and the establishment. The reviews are
+	 * the establishment's, so the `LocalBusiness` subtype is looked for before `Organization`.
+	 */
 	private const array BUSINESS_TYPES = array( 'LocalBusiness', 'Organization' );
 
-	private ?string $business_id = null;
+	/** @var array{id: string, type: string}|null */
+	private ?array $host_business = null;
 
 	public function register(): void {
 		$this->observe_host_graph();
@@ -46,24 +52,21 @@ abstract class LinkedEmitter extends BufferedEmitter {
 	 * @return array<int, array<string, mixed>> The very same graph.
 	 */
 	public function capture( array $graph ): array {
-		$this->business_id ??= $this->business_id_in( $graph );
+		$this->host_business ??= $this->business_in( $graph );
 
 		return $graph;
 	}
 
-	/**
-	 * Without an anchor the reviews would float free of any subject, which says less than
-	 * nothing. Better to publish none than an orphan.
-	 */
+	/** Reviews with no subject to point at say less than nothing; better to publish none. */
 	protected function has_something_to_publish(): bool {
-		return parent::has_something_to_publish() && null !== $this->business_id;
+		return parent::has_something_to_publish() && null !== $this->host_business;
 	}
 
 	/**
 	 * @return array<string, mixed>
 	 */
 	protected function build( ReviewSchema $schema ): array {
-		$subject = array( '@id' => $this->business_id );
+		$subject = array( '@id' => $this->host_business['id'] );
 
 		$graph = array_map(
 			static function ( array $review ) use ( $subject ): array {
@@ -76,8 +79,8 @@ abstract class LinkedEmitter extends BufferedEmitter {
 
 		if ( $schema->has_aggregate() ) {
 			$graph[] = array(
-				'@type'           => $schema->business_type,
-				'@id'             => $this->business_id,
+				'@type'           => $this->business_type_for( $schema ),
+				'@id'             => $this->host_business['id'],
 				'aggregateRating' => $schema->aggregate,
 			);
 		}
@@ -89,11 +92,54 @@ abstract class LinkedEmitter extends BufferedEmitter {
 	}
 
 	/**
-	 * @param array<int, array<string, mixed>> $graph Nodes as built by the host plugin.
+	 * The type to publish the aggregate under: what the site states, else what the host
+	 * already declared — repeating its answer keeps one entity carrying one type.
 	 */
-	private function business_id_in( array $graph ): ?string {
+	private function business_type_for( ReviewSchema $schema ): string {
+		return $schema->business_type
+			?? $this->host_business['type']
+			?? ReviewSchema::DEFAULT_BUSINESS_TYPE;
+	}
+
+	/**
+	 * The business the host graph describes, taking its most specific node.
+	 *
+	 * @param array<int, array<string, mixed>> $graph Nodes as built by the host plugin.
+	 *
+	 * @return array{id: string, type: string}|null
+	 */
+	private function business_in( array $graph ): ?array {
+		foreach ( self::BUSINESS_TYPES as $type ) {
+			$id = $this->id_declared_as( $graph, $type );
+
+			if ( null !== $id ) {
+				return array(
+					'id'   => $id,
+					'type' => $type,
+				);
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * The `@id` of the first node carrying a given type.
+	 *
+	 * A node declaring the type without an `@id` cannot be anchored to, so the search goes on.
+	 *
+	 * @param array<int, array<string, mixed>> $graph Nodes as built by the host plugin.
+	 * @param string                           $type  Schema type to look for.
+	 */
+	private function id_declared_as( array $graph, string $type ): ?string {
 		foreach ( $graph as $node ) {
-			if ( ! is_array( $node ) || ! $this->describes_the_business( $node ) ) {
+			if ( ! is_array( $node ) ) {
+				continue;
+			}
+
+			$declared = (array) ( $node['@type'] ?? array() );
+
+			if ( ! in_array( $type, $declared, true ) ) {
 				continue;
 			}
 
@@ -105,14 +151,5 @@ abstract class LinkedEmitter extends BufferedEmitter {
 		}
 
 		return null;
-	}
-
-	/**
-	 * @param array<string, mixed> $node Candidate graph node.
-	 */
-	private function describes_the_business( array $node ): bool {
-		$types = (array) ( $node['@type'] ?? array() );
-
-		return array() !== array_intersect( $types, self::BUSINESS_TYPES );
 	}
 }

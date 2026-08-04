@@ -6,6 +6,7 @@ assets/src
 .distignore
 .editorconfig
 .git
+.gitattributes
 .gitignore
 .github
 .DS_Store

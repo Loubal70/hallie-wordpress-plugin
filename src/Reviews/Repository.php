@@ -163,7 +163,7 @@ final class Repository {
 		$posts = get_posts(
 			array(
 				'post_type'              => ReviewPostType::SLUG,
-				'post_status'            => array_keys( get_post_stati() ),
+				'post_status'            => ReviewPostType::every_status(),
 				'posts_per_page'         => 1,
 				'no_found_rows'          => true,
 				'update_post_term_cache' => false,
@@ -202,7 +202,6 @@ final class Repository {
 		);
 	}
 
-
 	/**
 	 * @return array<string, mixed>
 	 */
@@ -216,7 +215,7 @@ final class Repository {
 			'ignore_sticky_posts'    => true,
 			'no_found_rows'          => true,
 			'update_post_term_cache' => false,
-            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Filtering a small, private post type.
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Filtering a small, private post type.
 			'meta_query'             => $this->meta_filters_for( $min_rating, $provider ),
 		);
 	}
