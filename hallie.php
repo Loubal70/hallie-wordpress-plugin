@@ -3,7 +3,7 @@
  * Plugin Name:       Hallie
  * Plugin URI:        https://hallie.app
  * Description:       Local search optimisation. Syncs verified customer reviews from your Google Business Profile and publishes them with honest structured data attribution. Not affiliated with Google.
- * Version:           0.1.1
+ * Version:           0.1.2
  * Requires at least: 7.0.2
  * Requires PHP:      8.4
  * Author:            Hallie
@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'HALLIE_VERSION', '0.1.0' );
+define( 'HALLIE_VERSION', '0.1.2' );
 
 require_once __DIR__ . '/src/Autoloader.php';
 

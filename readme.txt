@@ -4,7 +4,7 @@ Tags: reviews, local seo, google business profile, testimonials, schema
 Requires at least: 7.0.2
 Tested up to: 7.0
 Requires PHP: 8.4
-Stable tag: 0.1.1
+Stable tag: 0.1.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -106,6 +106,12 @@ Your token is encrypted with a key derived from your WordPress `auth` salt, unle
 Yes. It detects them and attaches the reviews to the business entity they already declare, rather than publishing a competing one. With no SEO plugin, it declares the entity itself.
 
 == Changelog ==
+
+= 0.1.2 =
+* The business entity is no longer requalified. The rating is published under the type your SEO plugin already declares, instead of always claiming `LocalBusiness` — a type that commits the site to an address it may never have published.
+* On a page describing a branch, reviews attach to the establishment rather than to whichever entity the host graph happened to list first.
+* `hallie_schema_business_type` now receives `null` and expects a type only when your site means to state one.
+* Fixed the version the plugin reports to the API and uses to cache-bust its assets.
 
 = 0.1.1 =
 * Composer installs no longer carry tests, tooling or build sources.
