@@ -28,9 +28,6 @@ composer i18n           # must leave nothing uncommitted
 ```
 
 `composer i18n` last of all, and again after a version bump: the POT header carries the
-plugin version, so bumping it without regenerating leaves the file stale.
-
-`composer i18n` last of all, and again after a version bump: the POT header carries the
 plugin version, so raising it without regenerating leaves the file stale.
 
 `yarn build` too, if you touched anything under `assets/src/`. The compiled bundle in
