@@ -35,7 +35,7 @@
         "phpcbf": "phpcbf",
         "test": "phpunit",
         "plugin-check": "wp plugin check hallie --categories=plugin_repo,security --exclude-directories=tests,bin,.github --exclude-files=.distignore,.editorconfig,.gitignore,.phpcs.xml.dist,phpunit.xml.dist,composer.json,composer.lock,CLAUDE.md,README.md",
-        "makepot": "wp i18n make-pot . languages/hallie.pot --domain=hallie",
+        "makepot": "wp i18n make-pot . languages/hallie.pot --domain=hallie --headers='{\"Report-Msgid-Bugs-To\":\"https://wordpress.org/support/plugin/hallie\"}'",
         "i18n": [
             "@makepot",
             "for po in languages/*.po; do wp i18n update-po languages/hallie.pot \"$po\"; done",
