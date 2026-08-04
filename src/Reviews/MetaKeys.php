@@ -85,4 +85,23 @@ final class MetaKeys {
 			self::SRC_REPLY_PUBLISHED_AT,
 		);
 	}
+
+	/**
+	 * Source keys a review always has, whatever it looks like.
+	 *
+	 * The rest are legitimately empty: an anonymous author, an account with no picture, a
+	 * review nobody replied to. Reading those as "missing" would rewrite such reviews on
+	 * every single sync and report edits that never happened.
+	 *
+	 * @return string[]
+	 */
+	public static function required_source_keys(): array {
+		return array(
+			self::SRC_EXTERNAL_ID,
+			self::SRC_PROVIDER,
+			self::SRC_PROFILE_ID,
+			self::SRC_RATING,
+			self::SRC_UPDATED_AT,
+		);
+	}
 }

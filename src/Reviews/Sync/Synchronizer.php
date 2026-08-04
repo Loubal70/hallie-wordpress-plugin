@@ -321,11 +321,15 @@ final class Synchronizer {
 
 	/**
 	 * Whether the stored source meta covers everything the plugin records today.
+	 *
+	 * Only the keys every review carries are checked. Judging an optional one missing —
+	 * an author with no picture is the common case — would rewrite that review on every
+	 * sync and report an edit that never happened.
 	 */
 	private function source_meta_is_complete( WP_Post $post ): bool {
-		foreach ( MetaKeys::source_keys() as $key ) {
-			if ( '' === get_post_meta( $post->ID, $key, true ) && '' !== (string) get_post_meta( $post->ID, MetaKeys::SRC_EXTERNAL_ID, true ) ) {
-				return MetaKeys::SRC_REPLY_COMMENT === $key || MetaKeys::SRC_REPLY_PUBLISHED_AT === $key;
+		foreach ( MetaKeys::required_source_keys() as $key ) {
+			if ( '' === (string) get_post_meta( $post->ID, $key, true ) ) {
+				return false;
 			}
 		}
 

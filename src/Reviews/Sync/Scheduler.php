@@ -75,6 +75,21 @@ final class Scheduler {
 	 * left — one event per batch, so each gets a fresh time limit and no request runs long.
 	 */
 	public static function drain_avatars(): void {
+		if ( ! self::settle_pictures() ) {
+			self::drain_soon();
+		}
+	}
+
+	/**
+	 * One pass of the picture work, whichever way the setting points.
+	 *
+	 * Hosting on, the queue is fetched. Hosting off, it is discarded and whatever was
+	 * already stored goes with it. Both drivers — cron and the command line — call this, so
+	 * a sync run either way settles the same amount of work.
+	 *
+	 * @return bool Whether nothing is left to do.
+	 */
+	private static function settle_pictures(): bool {
 		$importer = new AvatarImporter();
 		$done     = $importer->drain_queue();
 
@@ -82,9 +97,7 @@ final class Scheduler {
 			$done = $importer->discard_all() && $done;
 		}
 
-		if ( ! $done ) {
-			self::drain_soon();
-		}
+		return $done;
 	}
 
 	/** Ask for a drain pass. Idempotent, so callers may say it as often as they like. */
@@ -205,26 +218,24 @@ final class Scheduler {
 			}
 		} while ( $result->in_progress );
 
-		$this->import_queued_pictures();
+		$this->settle_all_pictures();
 
 		WP_CLI::success( $result->summary() );
 	}
 
 	/**
-	 * Empty the picture queue, batch after batch.
+	 * Settle the pictures here and now, batch after batch.
 	 *
-	 * A system cron driving this command is often the only thing that runs on the site;
-	 * leaving pictures queued would read as a silent failure rather than deferred work.
+	 * A system cron driving this command is often the only thing that runs on the site, so
+	 * leaving work scheduled would read as a silent failure rather than as deferred work.
 	 */
-	private function import_queued_pictures(): void {
-		$importer = new AvatarImporter();
-
+	private function settle_all_pictures(): void {
 		for ( $pass = 0; $pass < self::MAX_DRAIN_PASSES; $pass++ ) {
-			if ( $importer->drain_queue() ) {
+			if ( self::settle_pictures() ) {
 				return;
 			}
 		}
 
-		WP_CLI::warning( __( 'Some author pictures are still queued. Run the command again to continue.', 'hallie' ) );
+		WP_CLI::warning( __( 'Some author pictures are still pending. Run the command again to continue.', 'hallie' ) );
 	}
 }

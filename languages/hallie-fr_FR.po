@@ -182,7 +182,7 @@ msgid "Business profile"
 msgstr "Fiche d’établissement"
 
 #: src/Reviews/Repository.php:273
-#: src/Reviews/Sync/Synchronizer.php:477
+#: src/Reviews/Sync/Synchronizer.php:497
 msgid "Anonymous"
 msgstr "Anonyme"
 
@@ -192,15 +192,15 @@ msgstr "Anonyme"
 msgid "Profile picture for %s"
 msgstr "Photo de profil de %s"
 
-#: src/Reviews/Sync/Scheduler.php:128
+#: src/Reviews/Sync/Scheduler.php:144
 msgid "Every six hours (Hallie)"
 msgstr "Toutes les six heures (Hallie)"
 
-#: src/Reviews/Sync/Scheduler.php:133
+#: src/Reviews/Sync/Scheduler.php:149
 msgid "Once a day (Hallie)"
 msgstr "Une fois par jour (Hallie)"
 
-#: src/Reviews/Sync/Scheduler.php:186
+#: src/Reviews/Sync/Scheduler.php:213
 msgid "Sync finished with errors."
 msgstr "La synchronisation s’est terminée avec des erreurs."
 
@@ -411,3 +411,7 @@ msgstr "Ce champ ne tire pas ses choix de la source."
 #: build/settings.js:3
 msgid "Syncing…"
 msgstr "Synchronisation…"
+
+#: src/Reviews/Sync/Scheduler.php:239
+msgid "Some author pictures are still pending. Run the command again to continue."
+msgstr "Certaines photos d’auteur sont encore en attente. Relancez la commande pour continuer."

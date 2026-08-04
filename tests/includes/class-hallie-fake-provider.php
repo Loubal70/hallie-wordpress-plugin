@@ -65,7 +65,9 @@ final class Hallie_Fake_Provider implements ReviewProvider {
 	}
 
 	public function fetch_reviews( string $profile_id, int $page = 1, int $per_page = 100 ): ?ReviewPage {
-		$answer = $this->answers[ $this->call ] ?? array();
+		// array_key_exists, not ??: a scripted null means "unchanged", and ?? would read it
+		// as no answer at all and hand back an empty page instead.
+		$answer = array_key_exists( $this->call, $this->answers ) ? $this->answers[ $this->call ] : array();
 
 		++$this->call;
 

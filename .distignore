@@ -22,6 +22,9 @@ phpunit.xml.dist
 phpcs.xml
 phpcs.xml.dist
 README.md
+SECURITY.md
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
 webpack.config.js
 tests
 vendor

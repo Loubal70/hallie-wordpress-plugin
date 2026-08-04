@@ -86,17 +86,21 @@ final readonly class DisplayableReview {
 	}
 
 	/**
-	 * Avatar markup, with WordPress emitting srcset/sizes/loading on its own.
+	 * Avatar markup, from wherever the picture lives.
+	 *
+	 * Hosting is a setting. Hosted, the picture is an attachment and WordPress renders it —
+	 * srcset, and the loading and fetchpriority it judges right for where the image sits;
+	 * otherwise there is none to hand over and the tag is built by hand.
+	 *
+	 * The alt is what an editor wrote on the picture, else the author's name. Pass
+	 * `alt => ''` when the theme already prints that name beside it.
 	 *
 	 * @param string                $size Registered image size.
 	 * @param array<string, string> $attr Extra image attributes.
 	 */
 	public function avatar_html( string $size = 'thumbnail', array $attr = array() ): string {
 		$attr = array_merge(
-			array(
-				'loading' => 'lazy',
-				'alt'     => '',
-			),
+			array( 'alt' => $this->written_alt() ?? $this->author_name ),
 			$attr
 		);
 
@@ -108,12 +112,38 @@ final readonly class DisplayableReview {
 			return '';
 		}
 
-		// Served straight from the provider: no srcset to offer, and referrerpolicy keeps
-		// the visitor's current page out of the request.
+		return $this->image_hosted_elsewhere( $attr );
+	}
+
+	/**
+	 * An `<img>` for a file the site does not hold.
+	 *
+	 * No srcset can be offered for a file nothing is known about, and referrerpolicy keeps
+	 * the visitor's current page out of the source's logs. Lazy unless the caller says
+	 * otherwise, since there is no attachment for WordPress to reason about.
+	 *
+	 * @param array<string, string> $attr Image attributes, defaults already applied.
+	 */
+	private function image_hosted_elsewhere( array $attr ): string {
+		$attr = array_merge( array( 'loading' => 'lazy' ), $attr );
+
 		$attr['src']            = $this->avatar_url;
 		$attr['referrerpolicy'] = 'no-referrer';
 
 		return sprintf( '<img %s />', $this->attributes( $attr ) );
+	}
+
+	/**
+	 * The alt text stored on the imported picture, if anyone wrote one.
+	 */
+	private function written_alt(): ?string {
+		if ( null === $this->avatar_id ) {
+			return null;
+		}
+
+		$alt = (string) get_post_meta( $this->avatar_id, '_wp_attachment_image_alt', true );
+
+		return '' !== $alt ? $alt : null;
 	}
 
 	/**

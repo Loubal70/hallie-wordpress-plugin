@@ -19,8 +19,9 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Copies remote author pictures into the media library.
  *
- * Serving them from the provider's CDN would leak every visitor's IP to a third party on
- * page load, and those URLs expire.
+ * Hosting them is what the "download" setting buys: the source's own URLs expire, and
+ * requesting them on page load tells a third party who is reading the page. A site that
+ * would rather store nothing has two other settings, and this class stays out of the way.
  */
 final class AvatarImporter {
 
@@ -190,9 +191,9 @@ final class AvatarImporter {
 	 * Register the file as an attachment on the review.
 	 *
 	 * A refusal leaves the converted file behind — as_webp() removed the download already,
-	 * and media_handle_sideload only cleans up after itself on success. The alt text is
-	 * stored yet never rendered: avatar_html() keeps alt="" because the name sits beside the
-	 * picture, so this fills the field only the media library shows.
+	 * and media_handle_sideload only cleans up after itself on success. The alt text is a
+	 * starting point an editor may rewrite from the media library; avatar_html() reads
+	 * whatever it finds there.
 	 *
 	 * @param array{name: string, tmp_name: string} $upload File ready to move into the library.
 	 */
