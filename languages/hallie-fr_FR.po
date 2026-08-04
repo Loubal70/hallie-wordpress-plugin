@@ -192,15 +192,15 @@ msgstr "Anonyme"
 msgid "Profile picture for %s"
 msgstr "Photo de profil de %s"
 
-#: src/Reviews/Sync/Scheduler.php:144
+#: src/Reviews/Sync/Scheduler.php:142
 msgid "Every six hours (Hallie)"
 msgstr "Toutes les six heures (Hallie)"
 
-#: src/Reviews/Sync/Scheduler.php:149
+#: src/Reviews/Sync/Scheduler.php:147
 msgid "Once a day (Hallie)"
 msgstr "Une fois par jour (Hallie)"
 
-#: src/Reviews/Sync/Scheduler.php:213
+#: src/Reviews/Sync/Scheduler.php:211
 msgid "Sync finished with errors."
 msgstr "La synchronisation s’est terminée avec des erreurs."
 
@@ -412,6 +412,6 @@ msgstr "Ce champ ne tire pas ses choix de la source."
 msgid "Syncing…"
 msgstr "Synchronisation…"
 
-#: src/Reviews/Sync/Scheduler.php:239
+#: src/Reviews/Sync/Scheduler.php:237
 msgid "Some author pictures are still pending. Run the command again to continue."
 msgstr "Certaines photos d’auteur sont encore en attente. Relancez la commande pour continuer."
