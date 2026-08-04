@@ -86,7 +86,12 @@ final class Test_Hallie_Emitters extends WP_UnitTestCase {
 	 * Reviews floating free of any subject say less than nothing.
 	 */
 	public function test_nothing_is_published_without_an_entity_to_link_to(): void {
-		$emitter = $this->linked_to( array( '@type' => 'WebSite', '@id' => self::HOST_ID ) );
+		$emitter = $this->linked_to(
+			array(
+				'@type' => 'WebSite',
+				'@id'   => self::HOST_ID,
+			)
+		);
 
 		$this->assertSame( array(), $this->published_graph( $emitter ) );
 	}

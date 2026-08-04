@@ -58,7 +58,12 @@ final class Test_Hallie_Synchronizer extends WP_UnitTestCase {
 
 		$post_id = $this->stored_reviews()[0];
 		// The displayed name is the post title; there is no second field for the same thing.
-		wp_update_post( array( 'ID' => $post_id, 'post_title' => 'Camille Dupont' ) );
+		wp_update_post(
+			array(
+				'ID'         => $post_id,
+				'post_title' => 'Camille Dupont',
+			)
+		);
 		update_post_meta( $post_id, MetaKeys::OVR_FEATURED, '1' );
 
 		$this->provider->will_return( array( $this->a_review( 'ext-1', 'Actually, the best in town.' ) ) );

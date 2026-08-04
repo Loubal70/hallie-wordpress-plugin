@@ -36,7 +36,7 @@ is what makes the reviews legible to anything reading the page.
 | --- | --- | --- |
 | `hallie_register_providers` | `ReviewProvider[]` | Register another source of reviews. |
 | `hallie_api_base_url` | `string` | Point the bundled provider at a different host. |
-| `hallie_review_text` | `string`, `string $raw` | Choose what to keep when the source returns several languages. |
+| `hallie_review_text` | `string`, `string $comment` | Choose what to keep when the source returns several languages. |
 | `hallie_schema` | `ReviewSchema`, `DisplayableReview[]` | The whole payload, before it is handed to an emitter. |
 | `hallie_schema_review` | `array`, `DisplayableReview` | A single `Review` node. |
 | `hallie_schema_business_type` | `string\|null` | The type describing the business — see below. |
