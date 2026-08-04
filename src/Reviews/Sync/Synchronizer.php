@@ -354,7 +354,7 @@ final class Synchronizer {
 		$strays = get_posts(
 			array(
 				'post_type'              => ReviewPostType::SLUG,
-				'post_status'            => array_keys( get_post_stati() ),
+				'post_status'            => ReviewPostType::every_status(),
 				'posts_per_page'         => self::BATCH_SIZE,
 				'fields'                 => 'ids',
 				'no_found_rows'          => true,
@@ -418,7 +418,7 @@ final class Synchronizer {
 		$post_ids = get_posts(
 			array(
 				'post_type'              => ReviewPostType::SLUG,
-				'post_status'            => array_keys( get_post_stati() ),
+				'post_status'            => ReviewPostType::every_status(),
 				'posts_per_page'         => self::BATCH_SIZE,
 				'fields'                 => 'ids',
 				'no_found_rows'          => true,

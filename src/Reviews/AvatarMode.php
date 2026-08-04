@@ -37,8 +37,4 @@ enum AvatarMode: string {
 	public function stores_files(): bool {
 		return self::Local === $this;
 	}
-
-	public function shows_pictures(): bool {
-		return self::None !== $this;
-	}
 }

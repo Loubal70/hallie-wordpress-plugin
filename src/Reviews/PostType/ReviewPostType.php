@@ -33,6 +33,19 @@ final class ReviewPostType {
 
 	public const string SLUG = 'hallie_review';
 
+	/**
+	 * Every status a stored review may hold, for queries that must see all of them.
+	 *
+	 * `'any'` cannot be used: it drops the statuses flagged `exclude_from_search`, the bin
+	 * among them. A binned review would then be invisible to reconciliation and to picture
+	 * cleanup — kept forever, with an orphaned attachment behind it.
+	 *
+	 * @return string[]
+	 */
+	public static function every_status(): array {
+		return array_keys( get_post_stati() );
+	}
+
 	public function register(): void {
 		add_action( 'after_setup_theme', $this->claim_thumbnail_support( ... ), 20 );
 		add_action( 'init', array( $this, 'register_post_type' ) );
