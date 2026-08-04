@@ -100,7 +100,7 @@ final class StructuredData {
 			reviews: array_values( array_map( $this->review_node( ... ), $this->rendered ) ),
 			aggregate: $this->aggregate_node(),
 			listing_url: $this->profile?->profile_url,
-			business_type: (string) apply_filters( 'hallie_schema_business_type', 'LocalBusiness' ),
+			business_type: $this->stated_business_type(),
 		);
 
 		/**
@@ -110,6 +110,24 @@ final class StructuredData {
 		 * @param DisplayableReview[] $rendered Reviews rendered on this page.
 		 */
 		return apply_filters( 'hallie_schema', $schema, $this->rendered );
+	}
+
+	/**
+	 * The type the site states for its own business, or `null` to let the emitter work it out.
+	 *
+	 * Answering `LocalBusiness` here would qualify the company on its behalf, off the back of
+	 * nothing but the presence of reviews. Emitters read the host graph instead, and only fall
+	 * back to a neutral type when there is nothing to read.
+	 */
+	private function stated_business_type(): ?string {
+		/**
+		 * Filters the schema type describing the business.
+		 *
+		 * @param string|null $business_type Type stated by the site, or null to infer it.
+		 */
+		$stated = apply_filters( 'hallie_schema_business_type', null );
+
+		return is_string( $stated ) && '' !== $stated ? $stated : null;
 	}
 
 	/**

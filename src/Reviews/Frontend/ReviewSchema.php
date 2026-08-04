@@ -20,16 +20,24 @@ defined( 'ABSPATH' ) || exit;
 final readonly class ReviewSchema {
 
 	/**
-	 * @param array<int, array<string, mixed>> $reviews      One node per review actually rendered.
-	 * @param array<string, mixed>|null        $aggregate    AggregateRating node, only when the page shows it.
-	 * @param string|null                      $listing_url  Public listing, for `sameAs`.
-	 * @param string                           $business_type Schema type describing the business.
+	 * Reviews say nothing about whether a company is a local business, and this plugin is
+	 * in no position to decide: without an explicit answer from the site, the safe type is
+	 * the one that carries no obligation. `LocalBusiness` requires an address the site may
+	 * never have declared.
+	 */
+	public const string DEFAULT_BUSINESS_TYPE = 'Organization';
+
+	/**
+	 * @param array<int, array<string, mixed>> $reviews       One node per review actually rendered.
+	 * @param array<string, mixed>|null        $aggregate     AggregateRating node, only when the page shows it.
+	 * @param string|null                      $listing_url   Public listing, for `sameAs`.
+	 * @param string|null                      $business_type Schema type the site states for its business, if any.
 	 */
 	public function __construct(
 		public array $reviews,
 		public ?array $aggregate = null,
 		public ?string $listing_url = null,
-		public string $business_type = 'LocalBusiness',
+		public ?string $business_type = null,
 	) {}
 
 	public function is_empty(): bool {

@@ -22,10 +22,18 @@ defined( 'ABSPATH' ) || exit;
  */
 abstract class LinkedEmitter extends BufferedEmitter {
 
-	/** LocalBusiness is a subtype of Organization; hosts emit one or the other. */
+	/**
+	 * Business types a host graph may declare, searched in this order.
+	 *
+	 * `LocalBusiness` is a subtype of `Organization`, and a page about a branch declares both:
+	 * the company owning the site, and the establishment the page is about. Reviews belong to
+	 * the establishment, so the more specific type is looked for first.
+	 */
 	private const array BUSINESS_TYPES = array( 'LocalBusiness', 'Organization' );
 
 	private ?string $business_id = null;
+
+	private ?string $host_business_type = null;
 
 	public function register(): void {
 		$this->observe_host_graph();
@@ -46,7 +54,12 @@ abstract class LinkedEmitter extends BufferedEmitter {
 	 * @return array<int, array<string, mixed>> The very same graph.
 	 */
 	public function capture( array $graph ): array {
-		$this->business_id ??= $this->business_id_in( $graph );
+		if ( null === $this->business_id ) {
+			$business = $this->business_in( $graph );
+
+			$this->business_id        = $business['id'] ?? null;
+			$this->host_business_type = $business['type'] ?? null;
+		}
 
 		return $graph;
 	}
@@ -76,7 +89,7 @@ abstract class LinkedEmitter extends BufferedEmitter {
 
 		if ( $schema->has_aggregate() ) {
 			$graph[] = array(
-				'@type'           => $schema->business_type,
+				'@type'           => $this->business_type_for( $schema ),
 				'@id'             => $this->business_id,
 				'aggregateRating' => $schema->aggregate,
 			);
@@ -89,11 +102,57 @@ abstract class LinkedEmitter extends BufferedEmitter {
 	}
 
 	/**
-	 * @param array<int, array<string, mixed>> $graph Nodes as built by the host plugin.
+	 * The type to publish the aggregate under.
+	 *
+	 * What the site states wins; otherwise the host graph already answered the question and
+	 * repeating its answer keeps one entity with one type. Neither is a reason to invent one.
 	 */
-	private function business_id_in( array $graph ): ?string {
+	private function business_type_for( ReviewSchema $schema ): string {
+		return $schema->business_type
+			?? $this->host_business_type
+			?? ReviewSchema::DEFAULT_BUSINESS_TYPE;
+	}
+
+	/**
+	 * The business the host graph describes, taking its most specific node.
+	 *
+	 * @param array<int, array<string, mixed>> $graph Nodes as built by the host plugin.
+	 *
+	 * @return array{id: string, type: string}|null
+	 */
+	private function business_in( array $graph ): ?array {
+		foreach ( self::BUSINESS_TYPES as $type ) {
+			$id = $this->id_declared_as( $graph, $type );
+
+			if ( null !== $id ) {
+				return array(
+					'id'   => $id,
+					'type' => $type,
+				);
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * The `@id` of the first node carrying a given type.
+	 *
+	 * A node declaring the type without an `@id` cannot be linked to, so the search goes on
+	 * rather than giving up on that type.
+	 *
+	 * @param array<int, array<string, mixed>> $graph Nodes as built by the host plugin.
+	 * @param string                           $type  Schema type to look for.
+	 */
+	private function id_declared_as( array $graph, string $type ): ?string {
 		foreach ( $graph as $node ) {
-			if ( ! is_array( $node ) || ! $this->describes_the_business( $node ) ) {
+			if ( ! is_array( $node ) ) {
+				continue;
+			}
+
+			$declared = (array) ( $node['@type'] ?? array() );
+
+			if ( ! in_array( $type, $declared, true ) ) {
 				continue;
 			}
 
@@ -105,14 +164,5 @@ abstract class LinkedEmitter extends BufferedEmitter {
 		}
 
 		return null;
-	}
-
-	/**
-	 * @param array<string, mixed> $node Candidate graph node.
-	 */
-	private function describes_the_business( array $node ): bool {
-		$types = (array) ( $node['@type'] ?? array() );
-
-		return array() !== array_intersect( $types, self::BUSINESS_TYPES );
 	}
 }

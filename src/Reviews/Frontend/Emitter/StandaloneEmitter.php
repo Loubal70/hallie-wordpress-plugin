@@ -33,7 +33,7 @@ final class StandaloneEmitter extends BufferedEmitter {
 	protected function build( ReviewSchema $schema ): array {
 		$node = array(
 			'@context' => 'https://schema.org',
-			'@type'    => $schema->business_type,
+			'@type'    => $schema->business_type ?? ReviewSchema::DEFAULT_BUSINESS_TYPE,
 			'name'     => get_bloginfo( 'name' ),
 			'url'      => home_url( '/' ),
 		);
