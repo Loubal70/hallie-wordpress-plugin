@@ -34,7 +34,7 @@
         "phpcs": "phpcs",
         "phpcbf": "phpcbf",
         "test": "phpunit",
-        "plugin-check": "wp plugin check hallie --categories=plugin_repo,security --exclude-directories=tests,bin,.github --exclude-files=.distignore,.editorconfig,.gitignore,.phpcs.xml.dist,phpunit.xml.dist,composer.json,composer.lock,CLAUDE.md,README.md",
+        "plugin-check": "wp plugin check hallie --categories=plugin_repo,security --exclude-directories=tests,bin,.github --exclude-files=.distignore,.editorconfig,.gitattributes,.gitignore,.phpcs.xml.dist,.phpunit.result.cache,phpunit.xml.dist,composer.json,composer.lock,CLAUDE.md,README.md",
         "makepot": "wp i18n make-pot . languages/hallie.pot --domain=hallie --headers='{\"Report-Msgid-Bugs-To\":\"https://wordpress.org/support/plugin/hallie\"}'",
         "i18n": [
             "@makepot",
