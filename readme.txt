@@ -4,7 +4,7 @@ Tags: reviews, local seo, google business profile, testimonials, schema
 Requires at least: 7.0.2
 Tested up to: 7.0
 Requires PHP: 8.4
-Stable tag: 0.1.2
+Stable tag: 0.1.3
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -106,6 +106,9 @@ Your token is encrypted with a key derived from your WordPress `auth` salt, unle
 Yes. It detects them and attaches the reviews to the business entity they already declare, rather than publishing a competing one. With no SEO plugin, it declares the entity itself.
 
 == Changelog ==
+
+= 0.1.3 =
+* The business profile can be picked on a fresh install. The list of profiles was only fetched once the provider was fully configured, which required the very profile the list was there to choose.
 
 = 0.1.2 =
 * The business entity is no longer requalified. The rating is published under the type your SEO plugin already declares, instead of always claiming `LocalBusiness` — a type that commits the site to an address it may never have published.

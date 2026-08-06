@@ -71,8 +71,12 @@ final class HallieProvider implements ReviewProvider {
 	}
 
 	public function is_configured(): bool {
-		return '' !== (string) Settings::get( 'provider_token', '' )
+		return $this->is_reachable()
 			&& '' !== (string) Settings::get( 'profile_id', '' );
+	}
+
+	public function is_reachable(): bool {
+		return '' !== (string) Settings::get( 'provider_token', '' );
 	}
 
 	public function field_options( string $key ): array {
