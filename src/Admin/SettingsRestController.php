@@ -288,6 +288,7 @@ final class SettingsRestController {
 				'id'            => $provider->id(),
 				'label'         => $provider->label(),
 				'configured'    => $provider->is_configured(),
+				'reachable'     => $provider->is_reachable(),
 				'supportsSync'  => $provider->supports_sync(),
 				'documentation' => $provider->documentation_url(),
 				'platform'      => $provider->platform_name(),

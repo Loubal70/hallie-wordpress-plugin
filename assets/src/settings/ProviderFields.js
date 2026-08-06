@@ -32,7 +32,7 @@ export default function ProviderFields( {
 			values={ values }
 			secretHint={ secretHint }
 			onChange={ onChange }
-			ready={ provider.configured }
+			ready={ provider.reachable }
 		/>
 	) );
 }

@@ -65,6 +65,14 @@ interface ReviewProvider {
 	public function is_configured(): bool;
 
 	/**
+	 * Whether the source can be queried, before any setting whose choices come from it.
+	 *
+	 * Distinct from is_configured(): a field offering what the source returns has to be
+	 * filled in, and asking for a complete configuration first would make it unreachable.
+	 */
+	public function is_reachable(): bool;
+
+	/**
 	 * Fetch the reviewed business, including its aggregate rating.
 	 *
 	 * @throws \Hallie\Reviews\Exception\ProviderException When the source cannot be reached.
